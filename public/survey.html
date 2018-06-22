@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id='space'>
+    <header>
+        <h1>Survey Questions</h1>
+    </header>
+    <hr>
+    <h2>About you</h2>
+    <br>
+    <h2>Name(Required)</h2>
+    <textarea id='userName'></textarea>
+     <h2>Link to Photo(Required)</h2>
+     <textarea id='userPic'></textarea>
+     <div class='questions'>
+         <h3>Question 1</h3>
+         <p>Your patience in traffic</p>
+         <select id='question1'>
+             <option value='1'>1(Strongly Agree)</option>
+             <option value='2'>2</option>
+             <option value='3'>3</option>
+             <option value='4'>4</option>
+             <option value='5'>5(Strongly Disagree)</option>
+         </select>
+         <h3>Question 2</h3>
+         <p>Your enthusiasm on pizza?</p>
+         <select id='question2'>
+             <option value='1'>1(Strongly Agree)</option>
+             <option value='2'>2</option>
+             <option value='3'>3</option>
+             <option value='4'>4</option>
+             <option value='5'>5(Strongly Disagree)</option>
+         </select>
+         <h3>Question 3</h3>
+         <p>Going to the movies?</p>
+         <select id='question3'>
+             <option value='1'>1(Strongly Agree)</option>
+             <option value='2'>2</option>
+             <option value='3'>3</option>
+             <option value='4'>4</option>
+             <option value='5'>5(Strongly Disagree)</option>
+         </select>
+         <h3>Question 4</h3>
+         <p>You go to bed at reasonable hour(before 11) so to get a early start to the next day</p>
+         <select id='question4'>
+             <option value='1'>1(Strongly Agree)</option>
+             <option value='2'>2</option>
+             <option value='3'>3</option>
+             <option value='4'>4</option>
+             <option value='5'>5(Strongly Disagree)</option>
+         </select>
+         <h3>Question 5</h3>
+         <p>A typical nightclub experience(loud music, drinks, dancing) is heavily desirable</p>
+         <select id='question5'>
+             <option value='1'>1(Strongly Agree)</option>
+             <option value='2'>2</option>
+             <option value='3'>3</option>
+             <option value='4'>4</option>
+             <option value='5'>5(Strongly Disagree)</option>
+         </select>
+         <h3>Question 6</h3>
+         <p>Yo go to a coffee house, but only for your drink to-go, you never stay and sit around to work/read</p>
+         <select id='question6'>
+             <option value='1'>1(Strongly Agree)</option>
+             <option value='2'>2</option>
+             <option value='3'>3</option>
+             <option value='4'>4</option>
+             <option value='5'>5(Strongly Disagree)</option>
+         </select>
+         <h3>Question 7</h3>
+         <p>You love to cook your own meals</p>
+         <select id='question7'>
+             <option value='1'>1(Strongly Agree)</option>
+             <option value='2'>2</option>
+             <option value='3'>3</option>
+             <option value='4'>4</option>
+             <option value='5'>5(Strongly Disagree)</option>
+         </select>
+         <h3>Question 8</h3>
+         <p>You can leave a movie theatre to take a phone-call cause missing a few minutes 'isnt a big deal'</p>
+         <select id='question8'>
+             <option value='1'>1(Strongly Agree)</option>
+             <option value='2'>2</option>
+             <option value='3'>3</option>
+             <option value='4'>4</option>
+             <option value='5'>5(Strongly Disagree)</option>
+         </select>
+
+         <input type='submit' id='submitSurvey'>
+     
+     </div>
+     <script>
+   
+   $("#submitSurvey").on('click',function(){
+       var personData={
+           name:$("#userName").val(),
+           pic:$("#userPic").val(),
+           question1:$("#question1").val(),
+           question2:$("#question2").val(),
+           question3:$("#question3").val(),
+           question4:$("#question4").val(),
+           question5:$("#question5").val(),
+           question6:$("#question6").val(),
+           question7:$("#question7").val(),
+           question8:$("#question8").val()
+       };
+       if(personData.name === ""){alert("must fill out name!")
+                                $("#missedSomething").html("<h2>Missed something! </h2>")}
+       if(personData.pic === ""){alert("Must provide a picture so people can see your dumbass!")}
+       else{
+       console.log(personData)
+       console.log("click!")
+       $.post('/survey',personData).then(function(data){
+           console.log("posted!!");
+           alert("new person added!")
+           $("#space").empty();
+           $.get("/match").then(function(data){
+
+           
+           $("#space").html("<h1> Your match is " + data.name + "</h1><br><img src=" + data.pic + ">");
+           });
+       })
+    }
+   })
+ 
+         </script>
+</body>
+
+</html>
